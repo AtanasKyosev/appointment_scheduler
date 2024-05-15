@@ -43,11 +43,12 @@ function Login() {
             axios.post('http://localhost:8081/login', values)
                 .then(res => {
                     if (res.data.Login) {
+                        console.log(res);
                         navigate('/')
                     } else {
                         alert("Wrong username/password! Try again!")
                     }
-                    console.log(res);
+
                 })
                 .catch(err => console.log(err));
         }

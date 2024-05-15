@@ -20,7 +20,7 @@ function Layout() {
                     </li>
 
                     <li>
-                        <Link className="link" to="/signup">Profile</Link>
+                        <Link className="link" to="/login">Profile</Link>
                     </li>
 
                 </ul>

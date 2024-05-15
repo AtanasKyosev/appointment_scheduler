@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp"
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
+import EditProfile from "./pages/EditProfile.jsx";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                     <Route path="signup" element={<SignUp />} />
                     <Route path="login" element={<Login />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="edit-profile" element={<EditProfile />} />
 
                     <Route path="*" element={<NoPage />} />
                 </Route>

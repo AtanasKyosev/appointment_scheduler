@@ -45,7 +45,7 @@ function SignUp() {
             errors.password.length === 0) {
             axios.post('http://localhost:8081/signup', values)
                 .then(res => {
-                    navigate('/login')
+                    navigate('/')
                     console.log(res)
                 })
                 .catch(err => console.log(err));

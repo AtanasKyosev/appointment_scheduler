@@ -46,13 +46,40 @@ app.post('/signup', (req, res) => {
         req.body.last_name,
         req.body.username,
         req.body.password,
-    ]
+    ];
 
     db.query(sql, [values], (err, result) => {
-        if (err) return res.json({Message: "Error in Node"});
-        return res.json(result)
-    })
-})
+        if (err) {
+            console.error("Error in signup:", err);
+            return res.status(500).json({ message: "Error in signup" });
+        }
+
+        // Assuming signup was successful
+        // Retrieve the inserted user's data from the database
+        const insertedUserId = result.insertId;
+        const getUserSql = "SELECT * FROM users WHERE id = ?";
+        db.query(getUserSql, [insertedUserId], (err, userResult) => {
+            if (err) {
+                console.error("Error retrieving user data after signup:", err);
+                return res.status(500).json({ message: "Error in signup" });
+            }
+
+            // Assuming user data was successfully retrieved
+            const newUser = userResult[0];
+
+            // Create a session for the newly signed up user
+            req.session.user = {
+                id: newUser.id,
+                first_name: newUser.first_name,
+                last_name: newUser.last_name,
+                username: newUser.username,
+                created_at: newUser.created_at,
+            };
+
+            return res.status(200).json({ message: "Signup successful", user: req.session.user });
+        });
+    });
+});
 
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM users WHERE username = ? and password = ?";
@@ -73,6 +100,57 @@ app.post('/login', (req, res) => {
         }
     })
 })
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Error occurred during logout" });
+        }
+        res.clearCookie('session_id'); // Clear the session cookie
+        return res.status(200).json({ message: "Logged out successfully" });
+    });
+});
+
+
+app.post('/update-profile', (req, res) => {
+    const { id, first_name, last_name, username } = req.body;
+
+    // Assuming you have a database connection setup
+
+    const sql = "UPDATE users SET first_name = ?, last_name = ?, username = ? WHERE id = ?";
+    db.query(sql, [first_name, last_name, username, id], (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Failed to update profile" });
+        }
+        // Assuming the update was successful
+        return res.status(200).json({ message: "Profile updated successfully" });
+    });
+});
+
+
+app.post('/delete-user', (req, res) => {
+    const { id } = req.body;
+
+    const sql = "DELETE FROM users WHERE id = ?";
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Failed to delete user" });
+        }
+
+        req.session.destroy(err => {
+            if (err) {
+                console.error("Error destroying session:", err);
+                return res.status(500).json({ message: "Failed to delete user" });
+            }
+
+            return res.status(200).json({ message: "User deleted successfully" });
+        });
+    });
+});
+
 
 app.listen(8081, () => {
     console.log("Server started");

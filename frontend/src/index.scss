@@ -311,6 +311,89 @@ nav {
   }
 }
 
+.edit-container {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    padding-top: 100px;
+    font-size: 50px;
+  }
+}
+
+.edit-form {
+  border: 1px solid black;
+  border-radius: 20px;
+  margin-top: 50px;
+  margin-bottom: 130px;
+
+  width: 350px;
+  padding: 50px 20px;
+
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 45px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+
+    label {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    input {
+      font-size: 20px;
+      border: 1px solid black;
+      border-radius: 3px;
+      padding:5px 5px;
+
+      &::placeholder {
+        font-size: 20px;
+      }
+    }
+
+    button {
+      background-color: black;
+      color: white;
+      font-size: 22px;
+      padding: 4px;
+      margin-top: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 1s ease, color 1s ease;
+
+      &:hover {
+        background-color: white;
+        color: black;
+      }
+    }
+
+    p {
+      text-align: center;
+      font-size: 18px;
+      padding-top: 5px;
+    }
+
+    span {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
+
 footer {
   padding: 10px 0px;
   text-align: center;
@@ -352,6 +435,7 @@ footer {
     font-size: 30px;
   }
   .btn {
+    text-decoration: none;
     border: none;
     border-radius: 5px;
     font-size: 18px;
@@ -389,9 +473,27 @@ footer {
     padding-bottom: 20px;
   }
 
-  h4 {
+  .profile-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
     padding-bottom: 20px;
     border-bottom: 1px solid black;
+
+    button {
+      background-color: white;
+      border: none;
+      font-size: 22px;
+      border-bottom: 1px solid white;
+      padding-bottom: 2px;
+      transition: border-bottom-color 1s ease;
+      cursor: pointer;
+
+      &:hover {
+        border-bottom: 1px solid black;
+
+      }
+    }
   }
   .profile-appointments {
     h2 {padding-top: 20px}
@@ -440,15 +542,23 @@ footer {
     padding: 30px 30px;
 
     .profile-nav {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+
       .btn {
         padding: 5px 10px;
       }
     }
+
+    .profile-footer {
+      font-size: 21px;
+      flex-direction: column;
+      align-items: end;
+      gap: 15px;
+    }
   }
 }
-
-
-
 
 //default
 
