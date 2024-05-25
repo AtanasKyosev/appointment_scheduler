@@ -48,7 +48,7 @@ const EditProfile = () => {
         event.preventDefault();
         setErrors(Validation(formData))
         if (errors.username === "" && errors.first_name === "" && errors.last_name === "") {
-            axios.post('http://localhost:8081/update-profile', formData)
+            axios.put('http://localhost:8081/update-profile', formData)
                 .then(res => {
                     console.log(res.data);
                     alert("Note: Changes will take place after re-logging into your account!")

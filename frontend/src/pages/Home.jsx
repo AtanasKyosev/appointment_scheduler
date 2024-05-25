@@ -20,7 +20,7 @@ function Home() {
         <>
             <div className="background-image">
                 {name ? <h1>Welcome, {name}!</h1> : <h1>Welcome!</h1>}
-                <p>Transform your look, book an appointment for your next haircut!"</p>
+                <p>Transform your look, book an appointment for your next haircut!</p>
                 <Link className={"book-btn"} to="/book">Book Now!</Link>
             </div>
         </>

@@ -1,0 +1,20 @@
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {
+    display: none;
+}
+
+.react-datepicker {
+    border-color: black;
+    font-size: 18px;
+}
+
+.react-datepicker__header {
+    border-color: black;
+}
+
+.react-datepicker__time-container {
+    border-color: black;
+}
+
+.react-datepicker__time-container {
+    width: 86px;
+}

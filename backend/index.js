@@ -8,7 +8,7 @@ import bodyParser from "body-parser"
 const app = express();
 app.use(cors({
     origin: ["http://localhost:5173"],
-    methods: ["POST", "GET"],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
     credentials: true,
 }));
 app.use(express.json());
@@ -94,7 +94,8 @@ app.post('/login', (req, res) => {
                 username: user.username,
                 created_at: user.created_at,
             };
-            return res.json({Login: true, user: req.session.user});
+
+            return res.json({ Login: true, user: req.session.user});
         } else {
             return res.json({Login: false});
         }
@@ -107,16 +108,13 @@ app.get('/logout', (req, res) => {
             console.log(err);
             return res.status(500).json({ message: "Error occurred during logout" });
         }
-        res.clearCookie('session_id'); // Clear the session cookie
+        res.clearCookie('session_id');
         return res.status(200).json({ message: "Logged out successfully" });
     });
 });
 
-
-app.post('/update-profile', (req, res) => {
+app.put('/update-profile', (req, res) => {
     const { id, first_name, last_name, username } = req.body;
-
-    // Assuming you have a database connection setup
 
     const sql = "UPDATE users SET first_name = ?, last_name = ?, username = ? WHERE id = ?";
     db.query(sql, [first_name, last_name, username, id], (err, result) => {
@@ -129,8 +127,7 @@ app.post('/update-profile', (req, res) => {
     });
 });
 
-
-app.post('/delete-user', (req, res) => {
+app.delete('/delete-user', (req, res) => {
     const { id } = req.body;
 
     const sql = "DELETE FROM users WHERE id = ?";
@@ -151,6 +148,67 @@ app.post('/delete-user', (req, res) => {
     });
 });
 
+app.get('/profile', (req, res) => {
+    const userId = req.query.userId; // Assuming userId is passed as query param
+    console.log("Fetching appointments for user ID:", userId);
+    const sql = "SELECT * FROM appointments WHERE user_id = ?";
+    db.query(sql, [userId], (err, result) => {
+        if (err) {
+            console.error('Error fetching appointments:', err);
+            return res.status(500).send(err);
+        }
+        res.send(result);
+    });
+});
+
+app.delete('/appointments/:id', (req, res) => {
+    const appointmentId = parseInt(req.params.id); // Convert the ID to a number
+    console.log("Deleting appointment ID:", appointmentId);
+    if (isNaN(appointmentId)) {
+        return res.status(400).send({ message: "Invalid appointment ID" });
+    }
+    const sql = "DELETE FROM appointments WHERE id = ?";
+    db.query(sql, [appointmentId], (err, result) => {
+        if (err) {
+            console.error('Error deleting appointment:', err);
+            return res.status(500).send(err);
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).send({ message: "Appointment not found" });
+        }
+        res.send({ message: "Appointment deleted successfully" });
+    });
+});
+
+// Book a new appointment
+app.post('/book', (req, res) => {
+    const { date, time, service, user_id } = req.body;
+    console.log("Booking appointment for user ID:", user_id, "on", date, "at", time, "for service:", service);
+
+    if (!date || !time || !service || !user_id) {
+        return res.status(400).send({ message: "Missing required fields" });
+    }
+
+    const sql = "INSERT INTO appointments (date, time, service, user_id) VALUES (?, ?, ?, ?)";
+    db.query(sql, [date, time, service, user_id], (err, result) => {
+        if (err) {
+            console.error('Error booking appointment:', err);
+            return res.status(500).send(err);
+        }
+        console.log("Appointment booked successfully for user ID:", user_id);
+        res.send({ message: "Appointment booked successfully", appointmentId: result.insertId });
+    });
+});
+
+// app.get('/appointments', (req, res) => {
+//     const sql = "SELECT date, time FROM appointments";
+//     db.query(sql, (err, result) => {
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         res.json(result);
+//     });
+// });
 
 app.listen(8081, () => {
     console.log("Server started");

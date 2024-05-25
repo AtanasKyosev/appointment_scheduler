@@ -87,6 +87,49 @@ nav {
 .calendar-container {
   height: auto;
   text-align: center;
+  margin-top: 50px;
+  margin-bottom: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  h1 {
+    font-size: 60px;
+    padding-bottom: 20px;
+  }
+
+  select {
+    width: 327px;
+    height: 50px;
+    font-size: 25px;
+    padding-left: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  .btn {
+    width: 160px;
+    height: 50px;
+    font-size: 25px;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 1s ease, border 1s ease, color 1s ease;
+
+    &:hover {
+      background-color: #ec2028;
+      border: #ec2028;
+      color: white;
+    }
+  }
+
+  .error {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ec2028;
+  }
 }
 
 .services-container {
@@ -405,7 +448,9 @@ footer {
 }
 
 .profile-container {
-  height: 700px;
+  margin-top: 10px;
+  margin-bottom: 120px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -424,50 +469,52 @@ footer {
   padding: 30px 80px;
   border-radius: 20px;
 
-.profile-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
+  .profile-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
 
-  h2 {
-    font-size: 30px;
-  }
-  .btn {
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    padding: 5px 22px;
-    color: white;
-    transition: background-color 1s ease, color 1s ease, border 1s ease;
-    cursor: pointer;
-  }
+    h2 {
+      font-size: 30px;
+    }
 
-  .btn-edit {
-    border: 1px solid #0855a0;
-    background-color: #0855a0;
+    .btn {
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      padding: 5px 22px;
+      color: white;
+      transition: background-color 1s ease, color 1s ease, border 1s ease;
+      cursor: pointer;
+    }
 
-    &:hover {
-      background-color: white;
-      color: black;
-      border: 1px solid black;
+    .btn-edit {
+      border: 1px solid #0855a0;
+      background-color: #0855a0;
+
+      &:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
+    }
+
+    .btn-delete {
+      border: 1px solid #ec2028;
+      background-color: #ec2028;
+      margin-left: 5px;
+
+      &:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
     }
   }
 
-  .btn-delete {
-    border: 1px solid #ec2028;
-    background-color: #ec2028;
-    margin-left: 5px;
-
-    &:hover {
-      background-color: white;
-      color: black;
-      border: 1px solid black;
-    }
-  }
-}
   h3 {
     font-size: 60px;
     padding-bottom: 20px;
@@ -495,12 +542,74 @@ footer {
       }
     }
   }
+
   .profile-appointments {
-    h2 {padding-top: 20px}
+    h2 {
+      padding: 20px;
+    }
   }
 }
 
 
+//test
+
+.appointments-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 5px 0;
+  border-right: 1px solid black;
+  text-align: center;
+  align-items: center;
+
+  button {
+    border: none;
+    background-color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.5s ease;
+
+    &:hover {
+      color: #ec2028;
+    }
+  }
+}
+
+.appointments-table th {
+  border-bottom: 1px solid black;
+}
+
+.appointments-table tr {
+  border-bottom: 1px solid black;
+}
+
+.appointments-table tr:last-child {
+  border-bottom: none;
+}
+
+
+.appointments-table th:last-child,
+.appointments-table td:last-child {
+  border-right: none;
+}
+
+.appointments-table {
+  border-bottom: none;
+}
+
+.appointments-table tr td:last-child {
+  border-bottom: none;
+}
+
+/* Style for the first row */
+.appointments-table thead tr:first-child {
+  font-size: 16px; /* Adjust the font size as needed */
+  font-weight: bold; /* Optionally make it bold */
+}
 
 //Responsive
 
@@ -558,6 +667,12 @@ footer {
       gap: 15px;
     }
   }
+}
+
+.no-appointments {
+  font-size: 25px;
+  color: #ec2028;
+  text-align: center;
 }
 
 //default
