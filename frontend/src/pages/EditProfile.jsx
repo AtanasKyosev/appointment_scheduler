@@ -6,14 +6,12 @@ import Validation from "../validators/EditProfileValidator.jsx";
 const EditProfile = () => {
 
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         id: "",
         first_name: "",
         last_name: "",
         username: ""
     });
-
     const [errors, setErrors] = useState({});
 
     axios.defaults.withCredentials = true;

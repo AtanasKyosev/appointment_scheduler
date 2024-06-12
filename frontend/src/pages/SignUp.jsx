@@ -7,8 +7,6 @@ function SignUp() {
 
     const navigate = useNavigate();
 
-    // If you are in a session this will navigate you to home page
-
     useEffect(() => {
         axios.get('http://localhost:8081')
             .then(res => {
@@ -20,8 +18,6 @@ function SignUp() {
             })
             .catch(err => console.log(err))
     }, []);
-
-    // End of  comment
 
     const [values, setValues] = useState({
         first_name: '',

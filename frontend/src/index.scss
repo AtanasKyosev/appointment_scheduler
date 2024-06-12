@@ -197,6 +197,7 @@ nav {
     font-size: 50px;
     font-weight: 900;
     padding-top: 300px;
+    margin-bottom: 300px;
   }
 }
 
@@ -550,9 +551,6 @@ footer {
   }
 }
 
-
-//test
-
 .appointments-table {
   border-collapse: collapse;
   width: 100%;
@@ -605,29 +603,47 @@ footer {
   border-bottom: none;
 }
 
-/* Style for the first row */
 .appointments-table thead tr:first-child {
-  font-size: 16px; /* Adjust the font size as needed */
-  font-weight: bold; /* Optionally make it bold */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.administration-container {
+  padding-top: 60px;
+  margin-bottom: 400px;
+  padding-left: 400px;
+  padding-right: 400px;
+
+  h1 {
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 60px;
+  }
+}
+
+.no-appointments {
+  font-size: 25px;
+  color: #ec2028;
+  text-align: center;
 }
 
 //Responsive
 
 @media (max-width: 768px) {
   nav {
-    flex-direction: column; /* Change to column layout */
-    align-items: center; /* Align items to start of the column */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
   ul {
-    flex-direction: column; /* Change to column layout */
-    gap: 10px; /* Adjust gap for smaller screens */
+    flex-direction: column;
+    gap: 10px;
     padding: 15px;
   }
 
   .link {
-    font-size: 20px; /* Increase font size for better readability on mobile */
+    font-size: 20px;
   }
 
 
@@ -667,81 +683,15 @@ footer {
       gap: 15px;
     }
   }
+
+  footer {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .administration-container {
+    margin-bottom: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
-
-.no-appointments {
-  font-size: 25px;
-  color: #ec2028;
-  text-align: center;
-}
-
-//default
-
-//:root {
-//  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-//  line-height: 1.5;
-//  font-weight: 400;
-//
-//  color-scheme: light dark;
-//  color: rgba(255, 255, 255, 0.87);
-//  background-color: #242424;
-//
-//  font-synthesis: none;
-//  text-rendering: optimizeLegibility;
-//  -webkit-font-smoothing: antialiased;
-//  -moz-osx-font-smoothing: grayscale;
-//}
-//
-//a {
-//  font-weight: 500;
-//  color: #646cff;
-//  text-decoration: inherit;
-//}
-//a:hover {
-//  color: #535bf2;
-//}
-//
-//body {
-//  margin: 0;
-//  display: flex;
-//  place-items: center;
-//  min-width: 320px;
-//  min-height: 100vh;
-//}
-//
-//h1 {
-//  font-size: 3.2em;
-//  line-height: 1.1;
-//}
-//
-//button {
-//  border-radius: 8px;
-//  border: 1px solid transparent;
-//  padding: 0.6em 1.2em;
-//  font-size: 1em;
-//  font-weight: 500;
-//  font-family: inherit;
-//  background-color: #1a1a1a;
-//  cursor: pointer;
-//  transition: border-color 0.25s;
-//}
-//button:hover {
-//  border-color: #646cff;
-//}
-//button:focus,
-//button:focus-visible {
-//  outline: 4px auto -webkit-focus-ring-color;
-//}
-//
-//@media (prefers-color-scheme: light) {
-//  :root {
-//    color: #213547;
-//    background-color: #ffffff;
-//  }
-//  a:hover {
-//    color: #747bff;
-//  }
-//  button {
-//    background-color: #f9f9f9;
-//  }
-//}

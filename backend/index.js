@@ -113,6 +113,19 @@ app.get('/logout', (req, res) => {
     });
 });
 
+app.get('/profile', (req, res) => {
+    const userId = req.query.userId; // Assuming userId is passed as query param
+    console.log("Fetching appointments for user ID:", userId);
+    const sql = "SELECT DATE_FORMAT(date, '%Y-%m-%d') AS date, TIME_FORMAT(time, '%H:%i:%s') AS time, service, id FROM appointments WHERE user_id = ? ORDER BY date, time";
+    db.query(sql, [userId], (err, result) => {
+        if (err) {
+            console.error('Error fetching appointments:', err);
+            return res.status(500).send(err);
+        }
+        res.send(result);
+    });
+});
+
 app.put('/update-profile', (req, res) => {
     const { id, first_name, last_name, username } = req.body;
 
@@ -148,19 +161,6 @@ app.delete('/delete-user', (req, res) => {
     });
 });
 
-app.get('/profile', (req, res) => {
-    const userId = req.query.userId; // Assuming userId is passed as query param
-    console.log("Fetching appointments for user ID:", userId);
-    const sql = "SELECT * FROM appointments WHERE user_id = ?";
-    db.query(sql, [userId], (err, result) => {
-        if (err) {
-            console.error('Error fetching appointments:', err);
-            return res.status(500).send(err);
-        }
-        res.send(result);
-    });
-});
-
 app.delete('/appointments/:id', (req, res) => {
     const appointmentId = parseInt(req.params.id); // Convert the ID to a number
     console.log("Deleting appointment ID:", appointmentId);
@@ -180,7 +180,6 @@ app.delete('/appointments/:id', (req, res) => {
     });
 });
 
-// Book a new appointment
 app.post('/book', (req, res) => {
     const { date, time, service, user_id } = req.body;
     console.log("Booking appointment for user ID:", user_id, "on", date, "at", time, "for service:", service);
@@ -200,15 +199,25 @@ app.post('/book', (req, res) => {
     });
 });
 
-// app.get('/appointments', (req, res) => {
-//     const sql = "SELECT date, time FROM appointments";
-//     db.query(sql, (err, result) => {
-//         if (err) {
-//             return res.status(500).send(err);
-//         }
-//         res.json(result);
-//     });
-// });
+app.get('/appointments', (req, res) => {
+    const sql = "SELECT DATE_FORMAT(date, '%Y-%m-%d') AS date, TIME_FORMAT(time, '%H:%i:%s') AS time, service, id, user_id FROM appointments ORDER BY date, time";
+    db.query(sql, (err, result) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.json(result);
+    });
+});
+
+app.get('/users', (req, res) => {
+    const sql = "SELECT id, first_name, last_name FROM users";
+    db.query(sql, (err, result) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.json(result);
+    });
+});
 
 app.listen(8081, () => {
     console.log("Server started");

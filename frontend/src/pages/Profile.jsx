@@ -4,16 +4,13 @@ import {Link, useNavigate} from "react-router-dom";
 import dayjs from 'dayjs';
 
 const Profile = () => {
-
     const navigate = useNavigate();
-
     const [id, setUserId] = useState("");
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
     const [username, setUsername] = useState("");
     const [created_at, setCreatedAt] = useState("")
     const [appointments, setAppointments] = useState([]);
-
 
     axios.defaults.withCredentials = true;
 
@@ -43,7 +40,11 @@ const Profile = () => {
             params: { userId }
         })
             .then(response => {
-                setAppointments(response.data);
+                const filteredAppointments = response.data.filter(appointment => {
+                    const appointmentDateTime = dayjs(`${appointment.date} ${appointment.time}`);
+                    return appointmentDateTime.isAfter(dayjs());
+                });
+                setAppointments(filteredAppointments);
             })
             .catch(error => {
                 console.error("There was an error fetching the appointments!", error);
@@ -62,7 +63,6 @@ const Profile = () => {
         axios.delete('http://localhost:8081/delete-user', { id: id })
             .then(response => {
                 console.log(response.data);
-                // Redirect to login page or perform any other action
                 navigate('/');
             })
             .catch(error => {
@@ -75,15 +75,14 @@ const Profile = () => {
         axios.delete(`http://localhost:8081/appointments/${appointmentId}`)
             .then(response => {
                 console.log("Appointment deleted successfully");
-                // Re-fetch appointments after deletion
                 fetchAppointments(id);
-                // Optionally navigate back to the profile page
                 navigate('/profile');
             })
             .catch(error => {
                 console.error("There was an error deleting the appointment!", error);
             });
     };
+
     return (
         <>
             <div className="profile-container">
@@ -106,25 +105,6 @@ const Profile = () => {
 
                     <div className="profile-appointments">
                         <h2>My Appointments</h2>
-                        {/*<div className="appointments">*/}
-                        {/*    <div className="appointments-nav">*/}
-                        {/*        <p>Service:</p>*/}
-                        {/*        <p>Date</p>*/}
-                        {/*        <p>Time</p>*/}
-                        {/*    </div>*/}
-                        {/*    {appointments.length > 0 ? (*/}
-                        {/*        appointments.map(appointment => (*/}
-                        {/*            <div className="appointment-card" key={appointment.id}>*/}
-                        {/*                <p>{appointment.service}</p>*/}
-                        {/*                    <p>{dayjs(appointment.date).format("DD-MM-YYYY")}</p>*/}
-                        {/*                    <p>{appointment.time.toString().slice(0, 5)}</p>*/}
-                        {/*                    <button onClick={() => handleDelete(appointment.id)}>X</button>*/}
-                        {/*            </div>*/}
-                        {/*        ))*/}
-                        {/*    ) : (*/}
-                        {/*        <p className="no-appointments">No appointments.</p>*/}
-                        {/*    )}*/}
-                        {/*</div>*/}
                         <div className="appointments">
                             {appointments.length > 0 ? (
                                 <table className="appointments-table">

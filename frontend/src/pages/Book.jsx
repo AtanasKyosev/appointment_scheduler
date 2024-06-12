@@ -4,13 +4,18 @@ import {useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import "../custom-date-picker.css"
-import {addDays, isWeekend} from "date-fns"
+import {isWeekend} from "date-fns"
 import dayjs from "dayjs";
 import validateBooking from '../validators/BookValidator.jsx';
 
 
 function Book() {
     const navigate = useNavigate();
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedService, setSelectedService] = useState('');
+    const [userId, setUserId] = useState('');
+    const [errors, setErrors] = useState({});
+    const [appointments, setAppointments] = useState([]);
 
     axios.defaults.withCredentials = true;
 
@@ -26,10 +31,12 @@ function Book() {
             .catch(err => console.log(err));
     }, []);
 
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedService, setSelectedService] = useState('');
-    const [userId, setUserId] = useState('');
-    const [errors, setErrors] = useState({});
+    useEffect(() => {
+        // Fetch appointments
+        axios.get('http://localhost:8081/appointments')
+            .then(res => setAppointments(res.data))
+            .catch(err => console.log(err));
+    }, []);
 
     const handleDataChange = (date) => {
         setSelectedDate(date);
@@ -39,12 +46,11 @@ function Book() {
         setSelectedService(event.target.value);
     };
 
-    // Making the dates available for one month ahead
-    const minDate = new Date();
+    const minDate = new Date()
+    minDate.setDate(minDate.getDate() + 1)
     const maxDate = new Date();
-    maxDate.setDate(minDate.getDate() + 31);
+    maxDate.setDate(minDate.getDate() + 32);
 
-    // Restricting Saturdays and Sundays
     const isWeekendDay = (date) => {
         return isWeekend(date);
     };
@@ -53,7 +59,6 @@ function Book() {
         return !isWeekendDay(date);
     };
 
-    // Setting hours
     const generateTimes = () => {
         const times = [];
         const start = new Date();
@@ -66,7 +71,14 @@ function Book() {
                 times.push(new Date(time));
             }
         }
-        return times;
+
+        // Filter out booked times for the selected date
+        const selectedDateString = selectedDate ? dayjs(selectedDate).format("YYYY-MM-DD") : '';
+        const bookedTimesForSelectedDate = appointments
+            .filter(appointment => appointment.date === selectedDateString)
+            .map(appointment => appointment.time);
+
+        return times.filter(time => !bookedTimesForSelectedDate.includes(dayjs(time).format("HH:mm:ss")));
     };
 
     const includedTimes = generateTimes();
@@ -129,6 +141,7 @@ function Book() {
             {errors.service && <p className="error">{errors.service}</p>}
 
             <button className="btn" onClick={handleBook}>Book</button>
+
         </div>
     );
 }

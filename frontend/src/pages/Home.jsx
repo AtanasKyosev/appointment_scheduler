@@ -1,9 +1,8 @@
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 
 function Home() {
-
     const [name, setName] = useState();
 
     axios.defaults.withCredentials = true;

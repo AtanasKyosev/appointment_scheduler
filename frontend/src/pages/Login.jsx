@@ -7,8 +7,6 @@ function Login() {
 
     const navigate = useNavigate();
 
-    // If you are in a session this will navigate you to home page
-
     useEffect(() => {
         axios.get('http://localhost:8081')
             .then(res => {
@@ -21,8 +19,6 @@ function Login() {
             .catch(err => console.log(err))
     }, []);
 
-    // End of  comment
-
     const [values, setValues] = useState({
         username: '',
         password: '',
@@ -33,8 +29,6 @@ function Login() {
     const handleInput = (event) => {
         setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
     }
-
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
