@@ -54,8 +54,6 @@ app.post('/signup', (req, res) => {
             return res.status(500).json({ message: "Error in signup" });
         }
 
-        // Assuming signup was successful
-        // Retrieve the inserted user's data from the database
         const insertedUserId = result.insertId;
         const getUserSql = "SELECT * FROM users WHERE id = ?";
         db.query(getUserSql, [insertedUserId], (err, userResult) => {
@@ -64,10 +62,8 @@ app.post('/signup', (req, res) => {
                 return res.status(500).json({ message: "Error in signup" });
             }
 
-            // Assuming user data was successfully retrieved
             const newUser = userResult[0];
 
-            // Create a session for the newly signed up user
             req.session.user = {
                 id: newUser.id,
                 first_name: newUser.first_name,
@@ -114,7 +110,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-    const userId = req.query.userId; // Assuming userId is passed as query param
+    const userId = req.query.userId;
     console.log("Fetching appointments for user ID:", userId);
     const sql = "SELECT DATE_FORMAT(date, '%Y-%m-%d') AS date, TIME_FORMAT(time, '%H:%i:%s') AS time, service, id FROM appointments WHERE user_id = ? ORDER BY date, time";
     db.query(sql, [userId], (err, result) => {
@@ -135,7 +131,7 @@ app.put('/update-profile', (req, res) => {
             console.log(err);
             return res.status(500).json({ message: "Failed to update profile" });
         }
-        // Assuming the update was successful
+
         return res.status(200).json({ message: "Profile updated successfully" });
     });
 });
@@ -162,7 +158,7 @@ app.delete('/delete-user', (req, res) => {
 });
 
 app.delete('/appointments/:id', (req, res) => {
-    const appointmentId = parseInt(req.params.id); // Convert the ID to a number
+    const appointmentId = parseInt(req.params.id);
     console.log("Deleting appointment ID:", appointmentId);
     if (isNaN(appointmentId)) {
         return res.status(400).send({ message: "Invalid appointment ID" });
