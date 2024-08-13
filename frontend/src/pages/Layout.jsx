@@ -6,7 +6,7 @@ function Layout() {
         <>
             <nav>
                 <Link to="/">
-                    <img src={"public/images/barber.png"} alt="logo"/>
+                    <img src={"/images/barber.png"} alt="logo"/>
                 </Link>
 
                 <ul>
@@ -27,7 +27,7 @@ function Layout() {
             <Outlet/>
 
             <footer>
-                <p>All Rights Reserved &copy; Naval Academy Nikola Vaptsarov 2024</p>
+                <p>Barbershop AK &copy; All Rights Reserved </p>
             </footer>
         </>
     )

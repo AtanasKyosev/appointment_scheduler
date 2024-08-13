@@ -1,0 +1,23 @@
+[
+    {
+        "service_id": 1,
+        "service_name": "Haircut",
+        "service_details": "A haircut service tailored to your style preferences, ensuring a clean and polished look. Our experienced barbers will provide you with a haircut that suits your face shape and personal style. We use top-of-the-line tools and products to ensure the best results.",
+        "image": "/images/haircut.jpg",
+        "price": "$15"
+    },
+    {
+        "service_id": 2,
+        "service_name": "Beard",
+        "service_details": "Our beard grooming service is designed to keep your facial hair looking sharp and well-maintained. Whether you prefer a full beard or just a trim, we’ll ensure your beard complements your style perfectly.",
+        "image": "/images/beard.jpg",
+        "price": "$15"
+    },
+    {
+        "service_id": 3,
+        "service_name": "Combo H&B",
+        "service_details": "The Combo service includes both a haircut and a beard trim. This package offers a complete grooming experience, leaving you looking your best. It’s perfect for those who want a coordinated look with both their hair and beard.",
+        "image": "/images/combo.webp",
+        "price": "$20"
+    }
+]

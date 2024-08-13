@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import EditProfile from "./pages/EditProfile.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
+import Details from "./pages/Details.jsx";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="book" element={<Book />} />
                     <Route path="services" element={<Services />} />
+                    <Route path="services/details/:id" element={<Details />} />
                     <Route path="administration" element={<AdminPage />} />
 
                     <Route path="signup" element={<SignUp />} />
